@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', monospace;
+            color: #00ffff;
+            background: url('https://media1.giphy.com/media/bJ4TVNYNUympPgcpem/200.webp?cid=790b7611z9yheta138imb0vcaa2b642p3uhsfnpcrbqbxx0g&ep=v1_gifs_search&rid=200.webp&ct=g') no-repeat center center fixed;
+            background-size: cover;
+            filter: brightness(1.2);
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 1em;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #00ffff;
+        }
+
+        .nav-box {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #00ffff;
+            margin: 0 1em;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        nav a:hover {
+            color: #d3d3d3;
+        }
+
+        .divider {
+            height: 20px;
+            border-left: 2px solid #00ffff;
+            margin: 0 10px;
+        }
+
+        .content-section {
+            padding: 5em 1em;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        h1, h2 {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 3em;
+            color: #00ffff;
+            text-shadow: 2px 2px 4px rgba(0, 204, 255, 0.7);
+        }
+
+        .cta-buttons {
+            margin-top: 1em;
+        }
+
+        .cta-buttons a {
+            text-decoration: none;
+            color: white;
+            background-color: #007acc;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+            font-size: 1.2em;
+            border: 2px solid #00ffff;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta-buttons a:hover {
+            background-color: #005f99;
+            transform: scale(1.05);
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 1em;
+            color: #00ffff;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 3em;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            color: #00ffff;
+            font-size: 1.5em;
+            padding: 1em 2em;
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .skill-item:hover {
+            transform: scale(1.05);
+        }
+
+        .skill-item i {
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .projects-list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 3em;
+        }
+
+        .project-item {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 2em;
+            border-radius: 10px;
+            width: 250px;
+            transition: transform 0.3s;
+        }
+
+        .project-item:hover {
+            transform: scale(1.05);
+        }
+
+        .project-item h3 {
+            color: #00ffff;
+            margin: 1em 0;
+            font-size: 1.5em;
+        }
+
+        .project-item p {
+            color: #d3d3d3;
+        }
+
+        .project-item .icon {
+            font-size: 60px;
+            color: #00ffff;
+        }
+
+        /* Contact Styles */
+        .contact {
+            display: flex;
+            justify-content: center;
+            margin-top: 2em;
+            flex-wrap: wrap;
+        }
+
+        .contact div {
+            margin: 10px;
+            display: flex;
+            align-items: center;
+            color: #00ffff;
+        }
+
+        .contact a {
+            color: #00ffff;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+
+        .contact a:hover {
+            text-decoration: underline;
+            color: #d3d3d3;
+        }
+
+        /* Footer Styles */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #00ffff;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            .cta-buttons a {
+                font-size: 1em;
+                padding: 8px 16px;
+            }
+
+            .skill-item {
+                font-size: 1.2em;
+                padding: 10px 20px;
+            }
+
+            .contact div {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .icon {
+                font-size: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            nav a {
+                font-size: 1em;
+                margin: 0 0.5em;
+            }
+
+            .cta-buttons a {
+                font-size: 0.9em;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h2>Code Repository</h2>
+        </div>
+        <div class="nav-box">
+            <nav>
+                <a href="#home">Home</a>
+                <div class="divider"></div>
+                <a href="#about">About</a>
+                <div class="divider"></div>
+                <a href="#skills">Skills</a>
+                <div class="divider"></div>
+                <a href="#projects">Projects</a>
+                <div class="divider"></div>
+                <a href="#experience">Experience</a>
+                <div class="divider"></div>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <div id="home" class="content-section">
+        <i class="fas fa-laptop-code icon"></i>
+        <h1>Hey, I'm Randy! 👋</h1>
+        <p>Let's code the future together?</p>
+
+        <div class="cta-buttons">
+            <a href="file:///C:/Users/usant/Downloads/resume.pdf" target="_blank">View Resume</a>
+        </div>
+    </div>
+
+    <div id="about" class="content-section">
+        <h2>About Me</h2>
+        <p>I am a dedicated student leader and working professional with a passion for coding and exploring new technologies. I thrive on creative design challenges and continuously seek opportunities to enhance my skills. In my free time, I enjoy hiking and photography, which inspire my creativity and approach to problem-solving. As a junior developer focused on building interactive and functional web applications. Currently studying at the University of Saint Anthony.</p>
+    </div>
+
+    <div id="skills" class="content-section">
+        <h2>Skills</h2>
+        <div class="skills-list">
+            <div class="skill-item"><i class="fab fa-python"></i> Python</div>
+            <div class="skill-item"><i class="fas fa-code"></i> C++</div>
+            <div class="skill-item"><i class="fas fa-html5"></i> HTML</div>
+            <div class="skill-item"><i class="fab fa-java"></i> Java</div>
+            <div class="skill-item"><i class="fab fa-js"></i> JavaScript</div>
+            <div class="skill-item"><i class="fab fa-css3-alt"></i> CSS</div>
+            <div class="skill-item"><i class="fas fa-book"></i> Licensed Bookkeeper</div>
+        </div>
+    </div>
+
+    <div id="projects" class="content-section">
+        <h2>Here's Some of My Projects</h2>
+        <div class="projects-list">
+            <!-- To Do List Project -->
+            <div class="project-item">
+                <a href="Todolist.html">
+                    <i class="fas fa-check-square icon"></i>
+                    <h3>To Do List</h3>
+                </a>
+                <p>A simple and effective To Do List web app to keep track of your daily tasks. Built using HTML, CSS, and JavaScript.</p>
+            </div>
+
+            <!-- Calculator Project -->
+            <div class="project-item">
+                <a href="calculator.html">
+                    <i class="fas fa-calculator icon"></i>
+                    <h3>Calculator</h3>
+                </a>
+                <p>An interactive calculator with basic functionality. Built with HTML, CSS, and JavaScript.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="experience" class="content-section">
+        <h2>Work Experience</h2>
+        <table>
+            <tr>
+                <th>Job Title</th>
+                <th>Company Name</th>
+                <th>Dates Worked</th>
+            </tr>
+            <tr>
+                <td>Customer Service Representative</td>
+                <td>Quantrics Enterprises</td>
+                <td>April 2021 - August 2021</td>
+            </tr>
+            <tr>
+                <td>Escalation Retention Team</td>
+                <td>Quantrics Enterprises</td>
+                <td>August 2021 - January 2022</td>
+            </tr>
+            <tr>
+                <td>Case Manager</td>
+                <td>Quantrics Enterprises</td>
+                <td>January 2022 - Present</td>
+            </tr>
+        </table>
+    </div>
+
+    <div id="contact" class="content-section">
+        <h2>Contact Me</h2>
+        <div class="contact">
+            <div>
+                <i class="fas fa-envelope"></i><a href="mailto:johnny.honre@outlook.com">Email</a>
+            </div>
+            <div>
+                <i class="fab fa-github"></i><a href="https://github.com/DonVito678">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Randy. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

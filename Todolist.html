@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Code Queue - Programmer Style</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #1e1e1e;
+            color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://media.giphy.com/media/jBOOXxSJfG8kqMxT11/giphy.gif');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
+        }
+
+        .left-gif {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            width: 100px;
+            z-index: 1;
+        }
+
+        .right-gif {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
+            z-index: 1;
+        }
+
+        .todo-container {
+            background-color: rgba(45, 45, 45, 0.8);
+            padding: 30px;
+            border-radius: 8px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: normal;
+            color: #f0f0f0;
+        }
+
+        #taskInput {
+            padding: 10px;
+            width: 80%;
+            margin-right: 10px;
+            background-color: #3a3a3a;
+            color: #f5f5f5;
+            border: 1px solid #444;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #addButton {
+            padding: 10px;
+            cursor: pointer;
+            background-color: #5c5cff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #addButton:hover {
+            background-color: #3a3aff;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+            text-align: left;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #333;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            position: relative;
+        }
+
+        li.completed {
+            text-decoration: line-through;
+            color: #777;
+        }
+
+        li:hover {
+            background-color: #444;
+        }
+
+        button.completeBtn {
+            background-color: #7cc8c8;
+            color: #fff;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        button.completeBtn:hover {
+            background-color: #5d9f9f;
+        }
+
+        button.deleteBtn {
+            background-color: #ff5555;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        button.deleteBtn:hover {
+            background-color: #e74c3c;
+        }
+
+        .priority {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+
+        .priority-urgent {
+            color: red;
+        }
+
+        .priority-new {
+            color: #ff9900;
+        }
+
+        .priority-highvalue {
+            color: #ffcc00;
+        }
+
+        .task-text {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .task-enter {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="https://media.giphy.com/media/fwbZnTftCXVocKzfxR/giphy.gif" alt="Left GIF" class="left-gif">
+    <img src="https://media.giphy.com/media/93UOscPyDH8cdRfSaT/giphy.gif" alt="Right GIF" class="right-gif">
+
+    <div class="todo-container">
+        <h1>Programmer's Code Queue</h1>
+        <input type="text" id="taskInput" placeholder="Type a task...">
+
+        <label for="prioritySelect">Select Priority Level:</label>
+        <select id="prioritySelect">
+            <option value="urgent">❗ Urgent</option>
+            <option value="new">🆕 New</option>
+            <option value="highvalue">⭐ High Value</option>
+        </select>
+
+        <button id="addButton">Push to Queue</button>
+
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        const taskInput = document.getElementById("taskInput");
+        const addButton = document.getElementById("addButton");
+        const taskList = document.getElementById("taskList");
+        const prioritySelect = document.getElementById("prioritySelect");
+
+        const loadTasks = () => {
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            taskList.innerHTML = "";
+            tasks.forEach((task, index) => {
+                createTaskElement(task.text, task.completed, task.priority, index);
+            });
+        };
+
+        const createTaskElement = (taskText, isCompleted, priority, index) => {
+            const li = document.createElement("li");
+            if (isCompleted) {
+                li.classList.add("completed");
+            }
+
+            li.classList.add('task-enter');
+            li.innerHTML = `
+                <span class="priority ${priority === 'urgent' ? 'priority-urgent' : priority === 'new' ? 'priority-new' : 'priority-highvalue'}">${priority === 'urgent' ? '❗' : priority === 'new' ? '🆕' : '⭐'}</span>
+                <span class="task-text">${taskText}</span>
+                <div>
+                    <button class="completeBtn">Complete</button>
+                    <button class="deleteBtn delete">Delete</button>
+                </div>
+            `;
+
+            li.querySelector(".completeBtn").addEventListener("click", () => toggleComplete(index));
+            li.querySelector(".deleteBtn").addEventListener("click", () => deleteTask(index));
+
+            taskList.appendChild(li);
+        };
+
+        addButton.addEventListener("click", () => {
+            const taskText = taskInput.value.trim();
+            const priority = prioritySelect.value;
+
+            if (taskText) {
+                const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+                tasks.push({ text: taskText, completed: false, priority });
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+                createTaskElement(taskText, false, priority, tasks.length - 1);
+                taskInput.value = "";
+            }
+        });
+
+        const toggleComplete = (index) => {
+            const tasks = JSON.parse(localStorage.getItem("tasks"));
+            tasks[index].completed = !tasks[index].completed;
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            loadTasks();
+        };
+
+        const deleteTask = (index) => {
+            const tasks = JSON.parse(localStorage.getItem("tasks"));
+            tasks.splice(index, 1);
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            loadTasks();
+        };
+
+        loadTasks();
+    </script>
+
+</body>
+</html>
